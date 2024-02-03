@@ -1,0 +1,8 @@
+2023_OS_PF2.pdf
+
+.lsp/
+.clj-kondo/
+.idea/
+target/
+test/
+out/
