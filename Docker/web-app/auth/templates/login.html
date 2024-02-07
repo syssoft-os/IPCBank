@@ -1,0 +1,66 @@
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.0.0-beta19
+* @link https://tabler.io
+* Copyright 2018-2023 The Tabler Authors
+* Copyright 2018-2023 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
+<html lang="en">
+  <head>
+    <link rel="icon" href="{{ url_for('static', filename='/img/fav.ico') }}" type="image/vnd.microsoft.icon">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Universität Trier: Betriebsysteme - {% block title %}{% endblock %}</title>
+    <!-- CSS files -->
+    <link href="{{ url_for('static', filename='/css/tabler.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
+      <script src="{{ url_for('static', filename='/js/tabler.min.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='/js/nouislider.min.js') }}"></script>
+  </head>
+  <body  class=" d-flex flex-column">
+    <script>
+      const themeKey = "tablerTheme";
+      const queryParams = new URLSearchParams(window.location.search);
+      const savedTheme = localStorage.getItem(themeKey);
+      const theme = queryParams.get("theme") || savedTheme || "light";
+      if (theme === "dark") {
+          document.body.setAttribute("data-bs-theme", theme);
+      } else {
+          document.body.removeAttribute("data-bs-theme");
+      }
+      localStorage.setItem(themeKey,theme);
+    </script>
+    <div class="page page-center">
+      <div class="container container-tight py-4">
+        <form class="card card-md" action="./login" method="post" autocomplete="off" novalidate>
+          <div class="card-body text-center">
+            <div class="mb-4">
+               <div class="text-center mb-4">
+	  <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+              <img src="{{ url_for('static', filename='/img/Logo_Universitaet.svg') }}" width="110" height="32" class="navbar-brand-image">
+          </h1>
+        </div>
+
+            </div>
+            <div class="mb-4">
+              <span class="avatar avatar-xl mb-3" style="background-image: url({{url_for('static', filename='/img/sturm.png') }})"></span>
+            </div>
+            <div class="mb-4">
+              <input type="password" name="password" class="form-control" placeholder="Password&hellip;">
+            </div>
+            <div>
+               <button type="submit" class="btn btn-primary w-100">
+                <!-- Download SVG icon from http://tabler-icons.io/i/lock-open -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M8 11v-5a4 4 0 0 1 8 0" /></svg>
+                Unlock
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
