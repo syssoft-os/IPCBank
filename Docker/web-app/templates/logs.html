@@ -1,0 +1,384 @@
+{% extends "/partial/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+<style>
+ [data-bs-theme="dark"] .apexcharts-menu {
+     background-color: var(--tblr-body-bg);
+     border: var(--tblr-card-border-width) solid var(--tblr-card-border-color);
+
+ }
+ [data-bs-theme="dark"] .apexcharts-menu-item:hover {
+     background-color: var(--tblr-active-bg);
+ }
+
+ .has-border-left{
+     border-left-width: var(--tblr-border-width);
+ }
+
+ .has-border-right{
+     border-right-width: var(--tblr-border-width);
+ }
+
+ 
+ .has-no-border-bottom{
+     border-bottom-width: 0px;
+ }
+
+
+ .tableFixHead          { overflow: auto;max-height: 500px;padding-right: 15px; }
+ .tableFixHead thead { position: sticky; top: 0; z-index: 1; }
+ .tableFixHead tbody { height:100% }
+
+</style>
+<h1>Logs</h1>
+<!-- Your home page content goes here -->
+<div class="row row-cards">
+    <div class="col-12">
+	<div class="row row-cards">
+	    
+	    <div class="col-12">
+		<div id="data-log" class="card d-none">
+		    <div class="card-header">
+			<h3 class="card-title">Datalog: <span id="summary-id"></span></h3>
+		    </div>
+		    <div class="row row-cards">
+			
+			<div class="col-md-12 col-lg-8 card-body px-6">
+			    <h3 class="text-secondary">Simulation Information</h3>
+			    <table cellpadding="10">
+				<tbody><tr>
+				    <td class="text-secondary text-truncate " style="vertical-align:top">Seed</td>
+				    <td id="summary-seed" class="text-secondary text-truncate " style="white-space: normal;">E1EUXR5AEVGXQ06O</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Number of Accounts</td>
+				    <td id="summary-accounts" class="text-secondary text-truncate ">50</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Budget Range</td>
+				    <td id="summary-budget" class="text-secondary text-truncate ">200 - 700</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Transfer Range</td>
+				    <td id="summary-transfer" class="text-secondary text-truncate ">100 - 500</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Number of Clients</td>
+				    <td id="summary-clients" class="text-secondary text-truncate ">10</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Transactions per Clients</td>
+				    <td id="summary-transactions" class="text-secondary text-truncate ">50.000 - 300.000</td>
+				</tr>
+				</tbody></table>
+			</div>
+
+			<div class="col-md-12 col-lg-4 card-body px-6">
+			    <h3 class="text-secondary">Balance Status</h3>
+			    <table cellpadding="10"  class="table">
+				<thead>
+				    <tr>
+					<th>Language</th>
+					<th>Start</th>
+					<th>End</th>
+				    </tr>
+				    
+				</thead>
+				<tbody><tr>
+				    <td class="text-secondary text-truncate" style="vertical-align:top">C</td>
+				    <td id="balance_c_start" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				    <td id="balance_c_end" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Python Threads</td>
+				    <td id="balance_python_threads_start" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				    <td id="balance_python_threads_end" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				</tr>
+				  <tr>
+				    <td class="text-secondary text-truncate ">Python Message Queue</td>
+				    <td id="balance_python_msgq_start" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				    <td id="balance_python_msgq_end" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				  </tr>
+				  <tr>
+				    <td class="text-secondary text-truncate ">Python Pipes</td>
+				    <td id="balance_python_pipes_start" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				    <td id="balance_python_pipes_end" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Java</td>
+				    <td id="balance_java_start" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				    <td id="balance_java_end" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				</tr>
+				<tr>
+				    <td class="text-secondary text-truncate ">Clojure</td>
+				    <td id="balance_clojure_start" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				    <td id="balance_clojure_end" class="text-secondary text-truncate " style="white-space: normal;">1000</td>
+				</tr>
+				</tbody></table>
+			</div>
+
+			
+		    </div>
+		    
+		    <div class="card-body px-6">
+			<div id="chart-combination">
+			</div>
+		    </div>
+		    <div class="card-body">
+			<div id="table-bank" class="table-responsive tableFixHead">
+			    <table class="table text-center">
+				<thead>
+				    <tr>
+					<th class="text-start">n</th>
+					<th  colspan="2">C</th>
+					<th  colspan="2">Python T</th>
+					<th  colspan="2">Python Q</th>
+					<th  colspan="2">Python P</th>
+					<th  colspan="2">Java</th>
+					<th  colspan="2">Clojure</th>
+				    </tr>
+				    <tr>
+					<th></th>
+					<th >start</th>
+					<th >end</th>
+					<th >start</th>
+					<th >end</th>
+					<th >start</th>
+					<th >end</th>
+					<th >start</th>
+					<th >end</th>
+					<th >start</th>
+					<th >end</th>
+					<th >start</th>
+					<th >end</th>
+				    </tr>
+				</thead>
+				<tbody id="accounts-table-body" class="table-tbody  has-border-left  has-no-border-bottom ">
+				    
+				</tbody>
+			    </table>
+			</div>
+		    </div>
+		    
+		</div>
+	    </div>
+
+	    <div class="col-12">
+		<div class="card">
+		    <div class="card-body">
+			<div id="table-default" class="table-responsive tableFixHead ">
+			    <table class="table">
+				<thead>
+				    <tr>
+					<th><button class="table-sort" data-sort="sort-id">ID</button></th>
+					<th><button class="table-sort" data-sort="sort-seed">Seed</button></th>
+					<th><button class="table-sort" data-sort="sort-accounts">Accounts</button></th>
+					<th><button class="table-sort" data-sort="sort-budget">Budget</button></th>
+					<th><button class="table-sort" data-sort="sort-transfer">Transfer</button></th>
+					<th><button class="table-sort" data-sort="sort-clients">Clients</button></th>
+					<th><button class="table-sort" data-sort="sort-transactions">Transactions</button></th>
+					<th><button class="table-sort" data-sort="sort-time">Time</button></th>
+				    </tr>
+				</thead>
+				<tbody id="logs-table-body" class="table-tbody" style="vertical-align: middle;">
+				    
+				</tbody>
+
+			    </table>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    
+	</div>
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='/js/list.min.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/apexcharts.min.js') }}"></script>
+<script>
+ function populateTable(data) {
+     const tableBody = document.getElementById('logs-table-body');
+
+
+     tableBody.innerHTML = '';
+
+     data.forEach(job => {
+	 const row = document.createElement('tr');
+
+	 
+	 const cTime = parseFloat(job.c_time) || 0;
+	 const javaTime = parseFloat(job.java_time) || 0;
+	 const pythonTime = parseFloat(job.python_time) || 0;
+	 const clojureTime = parseFloat(job.clojure_time) || 0;
+	 
+	 const maxTime = Math.max(cTime, javaTime, pythonTime, clojureTime);
+
+	 row.innerHTML = `
+	     <td class="sort-id"><a href="/logs/${job._id}">${job._id}</a></td>
+	     <td class="sort-seed">${job.seed}</td>
+	     <td class="sort-accounts">${job.number_of_accounts}</td>
+	     <td class="sort-budget">${job.budget_min} - ${job.budget_max}</td>
+	     <td class="sort-transfer">${job.transfer_min} - ${job.transfer_max}</td>
+	     <td class="sort-clients">${job.number_of_clients}</td>
+	     <td class="sort-transactions">${job.transactions_per_client}</td>
+	     <td class="sort-time">${maxTime}</td>
+
+
+         `;
+         tableBody.appendChild(row);
+
+     });
+
+     // After populating the table, initialize the sorting
+     const list = new List('table-default', {
+         sortClass: 'table-sort',
+         listClass: 'table-tbody',
+         valueNames: ['sort-id', 'sort-seed', 'sort-accounts', 'sort-budget', 'sort-transfer', 'sort-clients', 'sort-transactions', 'sort-time']
+     });
+ }
+
+ 
+ document.addEventListener("DOMContentLoaded", function() {
+     fetch("/api/job/finished")
+	 .then(response => response.json())
+	 .then(data => {
+	     // Populate the table with the fetched data
+	     populateTable(data);
+	 })
+	 .catch(error => console.error('Error fetching data:', error));
+     
+
+ });
+
+
+</script>
+
+
+<script>
+ function formatNumberWithPoints(number) {
+     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+ }
+ 
+ document.addEventListener("DOMContentLoaded", function() {
+     const jobId = "{{id}}";
+     
+     if(jobId == "-1") return;
+     fetch("/api/job/get", {
+	 method: "POST",
+	 headers: {
+	     "Content-Type": "application/json",
+	 },
+	 body: JSON.stringify({ "id": jobId }),
+     })	 .then(response => response.json())
+	 .then(data => {
+	     document.getElementById('data-log').classList.remove('d-none');
+	     document.getElementById("summary-id").innerText = data._id;
+             document.getElementById("summary-seed").innerText = data.seed;
+             document.getElementById("summary-accounts").innerText = data.number_of_accounts;
+             document.getElementById("summary-budget").innerText = `${formatNumberWithPoints(data.budget_min)} - ${formatNumberWithPoints(data.budget_max)}`;
+             document.getElementById("summary-transfer").innerText = `${formatNumberWithPoints(data.transfer_min)} - ${formatNumberWithPoints(data.transfer_max)}`;
+             document.getElementById("summary-clients").innerText = data.number_of_clients;
+             document.getElementById("summary-transactions").innerText = `${formatNumberWithPoints(data.transactions_per_client)}`;
+
+	     window.ApexCharts && (new ApexCharts(document.getElementById('chart-combination'), {
+		 series: [{
+		     data: [data.c_time, data.python_threads_time, data.python_msgq_time, data.python_pipes_time, data.java_time, data.clojure_time]
+		 }],
+		 chart: {
+		     type: 'bar',
+		     height: 200
+		 },
+		 plotOptions: {
+		     bar: {
+			 distributed: true,
+			 borderRadius: 4,
+			 horizontal: true,
+		     }
+		 },
+		 dataLabels: {
+		     enabled: false
+		 },
+		 xaxis: {
+		     categories: ['C', 'Python Threads', 'Python Message Queue', 'Python Pipes', 'Java', 'Clojure'],
+		 },
+		 colors: [tabler.getColor("green"), tabler.getColor("pink"), tabler.getColor("orange") , tabler.getColor("yellow"), tabler.getColor("red"), tabler.getColor("primary")], 
+		 legend: {
+		     show: false,
+		 },
+		 tooltip: {
+		     custom: function({series, seriesIndex, dataPointIndex, w}) {
+			 return '<div class="arrow_box">' +
+				'<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
+				'</div>'
+		     }
+		 }
+	     })).render();
+
+
+
+
+	     const tableBody = document.getElementById('accounts-table-body');
+
+	     const len = Math.min(data.c_output.length, data.java_output.length, data.python_pipes_output.length, data.python_msgq_output.length,data.python_threads_output.length, data.clojure_output.length);
+
+	     
+	     tableBody.innerHTML = '';
+
+	     
+	     for (let i = 0; i < len; i=i+2) {
+		 const row = document.createElement('tr');
+
+		 row.innerHTML = `
+		     <td>${i/2}</td>
+		     <td class=" has-border-left">${data.c_output[i]}</td>
+		     <td >${data.c_output[i+1]}</td>
+		     <td class=" has-border-left">${data.python_threads_output[i]}</td>
+		     <td >${data.python_threads_output[i+1]}</td>
+ 		     <td class=" has-border-left">${data.python_msgq_output[i]}</td>
+		     <td >${data.python_msgq_output[i+1]}</td>
+ 		     <td class=" has-border-left">${data.python_pipes_output[i]}</td>
+		     <td >${data.python_pipes_output[i+1]}</td>
+		     <td class=" has-border-left">${data.java_output[i]}</td>
+		     <td >${data.java_output[i+1]}</td>
+		     <td class=" has-border-left">${data.clojure_output[i]}</td>
+		     <td >${data.clojure_output[i+1]}</td>
+		 `;
+		 tableBody.appendChild(row);
+
+	     };
+
+
+	     document.getElementById('balance_c_start').innerText = data.c_balance[0];
+	     document.getElementById('balance_c_end').innerText = data.c_balance[1];
+	     
+	     document.getElementById('balance_python_threads_start').innerText = data.python_threads_balance[0];
+	     document.getElementById('balance_python_threads_end').innerText = data.python_threads_balance[1];
+
+	     document.getElementById('balance_python_msgq_start').innerText = data.python_msgq_balance[0];
+	     document.getElementById('balance_python_msgq_end').innerText = data.python_msgq_balance[1];
+
+	     document.getElementById('balance_python_pipes_start').innerText = data.python_pipes_balance[0];
+	     document.getElementById('balance_python_pipes_end').innerText = data.python_pipes_balance[1];
+
+	     document.getElementById('balance_java_start').innerText = data.java_balance[0];
+	     document.getElementById('balance_java_end').innerText = data.java_balance[1];
+	     
+	     document.getElementById('balance_clojure_start').innerText = data.clojure_balance[0];
+	     document.getElementById('balance_clojure_end').innerText = data.clojure_balance[1];
+	     
+	     
+	     
+	 })
+	 .catch(error => {
+	     console.error("Fetch error:", error);
+	 });
+ });
+
+</script>
+
+{% endblock %}

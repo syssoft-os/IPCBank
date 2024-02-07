@@ -1,0 +1,34 @@
+<div class="nav-item dropdown  me-3">
+    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+	<span class="avatar-sm"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-group" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M17 10h2a2 2 0 0 1 2 2v1" /><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></svg></span>
+	<div class="d-none d-xl-block ps-2">
+	    <div>Group Members</div>
+	    <div class="mt-1 small text-muted">Betriebssysteme</div>
+	</div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+	{% for data in [
+        {'name': 'Pierre-Jordan de Amezaga', 'matrnmr': 's4pideam - 1133913', 'image_url': 'profile/jordan.jpg'},
+        {'name': 'Patrick Weil', 'matrnmr': 's4paweil - 1133410', 'image_url': 'profile/belle.jpg'},
+        {'name': 'Shirin Saleh', 'matrnmr': 's4shsale - 1604776', 'image_url': 'profile/shirin.jpg'},
+        {'name': 'Robert Roth', 'matrnmr': 's4roroth - 1415920', 'image_url': 'profile/robert.jpg'}
+        ] %}
+
+	<div class="dropdown-item" style="width: 300px;">
+	    <div class="row align-items-center">
+		<div class="col-auto">
+		    <div class="avatar" style="background-image: url({{ url_for('static', filename=data['image_url']) }})"></div>
+		</div>
+		<div class="col">
+		    <div class="d-block text-truncate">{{data['name']}}</div>
+		    <div class="d-block text-secondary">{{data['matrnmr']}}</div>
+
+		</div>
+	    </div>
+	</div>
+
+	{% endfor %}
+	
+    </div>
+</div>

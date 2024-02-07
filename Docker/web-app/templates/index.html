@@ -1,0 +1,461 @@
+{% extends "/partial/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+<h1>Dashboard</h1>
+
+
+<div class="row row-cards">
+
+    <div class="col-md-12 col-lg-8">
+	<div class="row row-cards">
+	    
+	    <div class="col-12">
+		<div class="card">
+		    <div class="card-header">
+			<h3 class="card-title">Current Job</h3>
+			<div class="card-actions">
+			    <div id="job_worker_button_container" class="col-6 col-sm-4 col-md-2 col-xl-auto">
+				<button id="job_worker_button" class="btn btn-green  w-100 btn-icon" aria-label="Tabler" onclick="toggleJobWorker()" disabled>
+				    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 4v16l13 -8z"></path></svg>
+				</button>
+			    </div>
+			</div>
+		    </div>
+		    <div class="card-body">
+			<div id="current_job_id" class="text-secondary mb-3"></div>
+
+			
+  			<div class="list-group list-group-flush">
+
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto">
+					<img height="24" src="{{ url_for('static', filename='/svg/c.svg') }}">
+				    </div>
+				    <div class="col text-truncate">
+					<div>C</div>
+					<div id="current_job_c"></div>
+				    </div>
+				</div>
+			    </div>
+			    
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto"> 
+					<img width="24" src="{{ url_for('static', filename='/svg/python.svg') }}">
+				    </div>
+				    <div class="col text-truncate">
+					<div>Python Threads</div>
+					<div id="current_job_python_threads" class="text-secondary"></div>
+				    </div>
+				</div>
+			    </div>
+
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto"> 
+					<img width="24" src="{{ url_for('static', filename='/svg/python_msgq.svg') }}">
+				    </div>
+				    <div class="col text-truncate">
+					<div>Python Message Queue</div>
+					<div id="current_job_python_msgq" class="text-secondary"></div>
+				    </div>
+				</div>
+			     </div>
+
+
+			     <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto"> 
+					<img width="24" src="{{ url_for('static', filename='/svg/python_pipe.svg') }}">
+				    </div>
+				    <div class="col text-truncate">
+					<div>Python Pipes</div>
+					<div id="current_job_python_pipes" class="text-secondary"></div>
+				    </div>
+				</div>
+			     </div>
+
+
+			     
+
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto">
+					<img width="24" src="{{ url_for('static', filename='/svg/java.svg') }}">
+				    </div>
+				    <div class="col text-truncate">
+					<div>Java</div>
+					<div id="current_job_java" class="text-secondary text-truncate mt-n1"></div>
+				    </div>
+				</div>
+			    </div>
+
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto">
+					<img width="24" src="{{ url_for('static', filename='/svg/clojure.svg') }}">
+				    </div>
+				    <div class="col text-truncate">
+					<div>Clojure</div>
+					<div id="current_job_clojure" class="text-secondary text-truncate mt-n1"></div>
+				    </div>
+				</div>
+			    </div>
+			</div>
+		    </div>
+		    
+		</div>
+	    </div>
+
+	    
+
+	    
+	    <div class="col-12">
+		<div class="card">
+		    <div class="card-header">
+			<h3 class="card-title">Job List</h3>
+		    </div>
+		    <div class="card-table table-responsive">
+			<table class="table">
+			    <thead>
+				<tr>
+				    <th>ID</th>
+				    <th>Number of Accounts</th>
+				    <th>Budget Range</th>
+				    <th>Transfer Range</th>
+				    <th>Number of Clients</th>
+				    <th>Transactions per Client</th>
+				</tr>
+			    </thead>
+			    <tbody id="job-list">
+			    </tbody>
+			</table>
+		    </div>
+		</div>
+	    </div>
+
+
+	    
+	</div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+	<div class="row row-cards">
+	    <div class="col-12">
+		<div class="card">
+		    <div class="card-header">
+			<h3 class="card-title">Computer Information</h3>
+			<div class="card-actions">
+			    <div id="system_monitor_button_container" class="col-6 col-sm-4 col-md-2 col-xl-auto">
+				<button id="system_monitor_button" class="btn btn-green  w-100 btn-icon" aria-label="Tabler" onclick="toggleSystemMonitor()">
+				    <svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z" /></svg>
+				</button>
+			    </div>
+			</div>
+		    </div>
+		    
+		    <div class="card-body px-0">
+			<div class="list-group list-group-flush overflow-auto">
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-desktop" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z" /><path d="M7 20h10" /><path d="M9 16v4" /><path d="M15 16v4" /></svg>
+				    </div>
+				    <div class="col text-truncate">
+					<div>OS</div>
+					<div class="text-secondary text-truncate mt-n1">{{system_info["os"]}}</div>
+				    </div>
+				</div>
+			    </div>
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cpu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 5m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /><path d="M9 9h6v6h-6z" /><path d="M3 10h2" /><path d="M3 14h2" /><path d="M10 3v2" /><path d="M14 3v2" /><path d="M21 10h-2" /><path d="M21 14h-2" /><path d="M14 21v-2" /><path d="M10 21v-2" /></svg>
+				    </div>
+				    <div class="col">Processor
+					<table cellpadding="5">
+					    <tr>
+						<td class="text-secondary text-truncate mt-n1" style="vertical-align:top">Model</td>
+						<td class="text-secondary text-truncate mt-n1" style="white-space: normal;">{{system_info["model"]}}</td>
+					    </tr>
+					    <tr>
+						<td class="text-secondary text-truncate mt-n1" >Architecture</td>
+						<td class="text-secondary text-truncate mt-n1">{{system_info["arch"][0]}}</td>
+					    </tr>
+					    <tr>
+						<td class="text-secondary text-truncate mt-n1">Cores</td>
+						<td class="text-secondary text-truncate mt-n1">{{system_info["cores"]}}</td>
+					    </tr>
+					    <tr>
+						<td class="text-secondary text-truncate mt-n1">Threads</td>
+						<td class="text-secondary text-truncate mt-n1">{{system_info["threads"]}}</td>
+					    </tr>
+					    <tr>
+						<td class="text-secondary text-truncate mt-n1">Ram</td>
+						<td class="text-secondary text-truncate mt-n1">{{system_info["r_t"]}} GB</td>
+					    </tr>
+					    <tr>
+						<td class="text-secondary text-truncate mt-n1">CPU Frequency</td>
+						<td class="text-secondary text-truncate mt-n1">{{system_info["freq"]}} MHz</td>
+					    </tr>
+					</table>
+				    </div>
+				</div>
+			    </div>
+			    <div class="list-group-item">
+				<div class="row">
+				    <div class="col-auto">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-desktop" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z" /><path d="M7 20h10" /><path d="M9 16v4" /><path d="M15 16v4" /></svg>
+				    </div>
+				    <div class="col text-truncate">
+					<div class="d-flex align-items-top">
+					    <div >Systemmonitor</div>
+
+					</div>
+					<div id="cpu_percent" class="h1 mt-3">-- %</div>
+
+
+					<div id="single_cpu" class="my-3 d-none">
+					    {% set colors = ["purple", "pink", "red", "orange", "yellow", "lime", "green", "teal", "cyan"] %}
+
+					    {% for cpu_percent in system_info["cpu_percent"] %}
+					    <div  class="d-flex mt-2">
+						<div class="text-{{colors[(loop.index0 * 2) % 9]}}">CPU {{ loop.index0 }}</div>
+						<div class="ms-auto">
+						    <span id="cpu_index_{{ loop.index0 }}_text" class="text-{{colors[(loop.index0 * 2) % 9]}} d-inline-flex align-items-center lh-1">
+							-- GB
+						    </span>
+						</div>
+					    </div>
+					    <div class="progress progress-sm">
+						<div  id="cpu_index_{{ loop.index0 }}_progress" class="progress-bar bg-{{colors[(loop.index0 * 2) % 9]}}" style="width: 0%" role="progressbar">
+						</div>
+					    </div>
+					    {% endfor %}
+					</div>
+
+					
+					
+					<div class="text-secondary text-truncate">RAM</div>
+					<div  class="d-flex mt-2">
+					    <div id="cpu_used" class="text-blue">-- GB</div>
+					    <div class="ms-auto">
+						<span class="text-green d-inline-flex align-items-center lh-1">
+						    {{system_info["r_t"]}} GB
+						</span>
+					    </div>
+					</div>
+					<div class="progress progress-sm">
+					    <div id="cpu_progress" class="progress-bar bg-primary" style="width: 0%" role="progressbar">
+					    </div>
+					</div>
+				    </div>
+				</div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+ var eventSource;
+ var monitoringActive = false;
+
+ function toggleSystemMonitor() {
+     if (monitoringActive) {
+         stopSystemMonitor();
+     } else {
+         startSystemMonitor();
+     }
+ }
+
+ function startSystemMonitor() {
+     monitoringActive = true;
+     document.getElementById('system_monitor_button_container').innerHTML = ' <button id="system_monitor_button" class="btn btn-red  w-100 btn-icon" aria-label="Tabler" onclick="toggleSystemMonitor()"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="currentColor" /><path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="currentColor" /></svg></button>';
+     document.getElementById('single_cpu').classList.remove("d-none");
+
+     eventSource = new EventSource('/stream/system_monitor');
+     eventSource.onmessage = function (event) {
+
+         var json = JSON.parse(event.data)
+	 document.getElementById('cpu_percent').textContent =  json["cpu_percent_mean"] + " %";
+	 document.getElementById('cpu_used').textContent = json["r_u"] + " GB";
+         document.getElementById('cpu_progress').style.width = json["r_p"] + "%";
+
+	 for (var i = 0; i < json["cpu_percent"].length; i++) {
+	     var progressElement = document.getElementById('cpu_index_' + i + '_progress');
+	     var textElement = document.getElementById('cpu_index_' + i + '_text');
+	     
+	     if (progressElement && textElement) {
+		 progressElement.style.width = json["cpu_percent"][i] + "%";
+		 textElement.textContent = json["cpu_percent"][i] + " %";
+	     } }
+	 
+     };
+ }
+
+ function stopSystemMonitor() {
+     monitoringActive = false;
+     eventSource.close();
+     document.getElementById('system_monitor_button_container').innerHTML = '<button id="system_monitor_button" class="btn btn-green  w-100 btn-icon" aria-label="Tabler" onclick="toggleSystemMonitor()"><svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z" /></svg></button>';
+     document.getElementById('cpu_percent').textContent =  "-- %";
+     document.getElementById('cpu_used').textContent = "-- GB";
+     document.getElementById('cpu_progress').style.width = "0%";
+     document.getElementById('single_cpu').classList.add("d-none");
+     document.getElementById('single_cpu').classList.innerHTML = '';
+ }
+</script>
+
+
+
+<script>
+ let previousHash = null;
+ function calculateChecksum(data) {
+
+     const inputString = JSON.stringify(data);
+
+
+     const checksum = inputString.split('').reduce((acc, char) => {
+	 acc += char.charCodeAt(0);
+	 return acc;
+     }, 0);
+
+     return checksum;
+ }
+ 
+ 
+ function updateJobList() {
+     fetch('/api/job/list')
+	 .then(response => response.json())
+	 .then(data => {
+             const currentChecksum = calculateChecksum(data);
+	     if (currentChecksum == previousHash) return;
+	     previousHash = currentChecksum;
+             const tableBody = document.getElementById('job-list');
+             tableBody.innerHTML = '';
+
+             // Populate the table with the new data
+             data["job_list"].forEach(job => {
+		 const newRow = document.createElement('tr');
+		 newRow.innerHTML = `
+		     <td>${job._id}</td>
+		     <td>${job.number_of_accounts}</td>
+		     <td>${job.budget_min}-${job.budget_max}</td>
+		     <td>${job.transfer_min}-${job.transfer_max}</td>
+		     <td>${job.number_of_clients}</td>
+		     <td>${job.transactions_per_client}</td>
+		 `;
+		 tableBody.appendChild(newRow);
+             });
+
+	     const button = document.getElementById('job_worker_button_container');
+	     button.disabled = false;
+	     if(data["active"] == 'True'){
+		 button.innerHTML = `<button id="job_worker_button" class="btn btn-red  w-100 btn-icon" aria-label="Tabler" onclick="toggleJobWorker()"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="currentColor" /><path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" stroke-width="0" fill="currentColor" /></svg></button> `;
+	     }else{
+		 button.innerHTML = `<button id="job_worker_button" class="btn btn-green  w-100 btn-icon" aria-label="Tabler" onclick="toggleJobWorker()">
+		     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 4v16l13 -8z"></path></svg>
+		 </button>`;
+	     }
+
+
+	     if (data["current_job"] && data["active"] == 'True') {
+		 document.getElementById("current_job_id").innerText = data["current_job"]["_id"];
+
+		 if (data["current_job"]["c_time"] !== null) {
+		     document.getElementById("current_job_c").innerHTML = `<span class="text-green">Completed in ${data["current_job"]["c_time"]} s</span>`;
+		 } else if (data["current_job"]["execution"] === "c") {
+		     document.getElementById("current_job_c").innerHTML = `<span class="placeholder-glow"><span class="placeholder placeholder-xs col-3"></span></span>`;
+		 } else {
+		     document.getElementById("current_job_c").innerHTML = '<span class="text-secondary">Pending...</span>';
+		 }
+
+		 if (data["current_job"]["python_threads_time"] !== null) {
+		     document.getElementById("current_job_python_threads").innerHTML = `<span class="text-green">Completed in ${data["current_job"]["python_threads_time"]} s</span>`;
+		 } else if (data["current_job"]["execution"] === "python_threads") {
+		     document.getElementById("current_job_python_threads").innerHTML = `<span class="placeholder-glow"><span class="placeholder placeholder-xs col-3"></span></span>`;
+		 } else {
+		     document.getElementById("current_job_python_threads").innerHTML = '<span class="text-secondary">Pending...</span>';
+		 }
+
+
+		 if (data["current_job"]["python_msgq_time"] !== null) {
+		     document.getElementById("current_job_python_msgq").innerHTML = `<span class="text-green">Completed in ${data["current_job"]["python_msgq_time"]} s</span>`;
+		 } else if (data["current_job"]["execution"] === "python_msgq") {
+		     document.getElementById("current_job_python_msgq").innerHTML = `<span class="placeholder-glow"><span class="placeholder placeholder-xs col-3"></span></span>`;
+		 } else {
+		     document.getElementById("current_job_python_msgq").innerHTML = '<span class="text-secondary">Pending...</span>';
+		 }
+
+		 if (data["current_job"]["python_pipes_time"] !== null) {
+		     document.getElementById("current_job_python_pipes").innerHTML = `<span class="text-green">Completed in ${data["current_job"]["python_pipes_time"]} s</span>`;
+		 } else if (data["current_job"]["execution"] === "python_pipes") {
+		     document.getElementById("current_job_python_pipes").innerHTML = `<span class="placeholder-glow"><span class="placeholder placeholder-xs col-3"></span></span>`;
+		 } else {
+		     document.getElementById("current_job_python_pipes").innerHTML = '<span class="text-secondary">Pending...</span>';
+		 }
+		 
+
+		 if (data["current_job"]["java_time"] !== null) {
+		     document.getElementById("current_job_java").innerHTML = `<span class="text-green">Completed in ${data["current_job"]["java_time"]} s</span>`;
+		 } else if (data["current_job"]["execution"] === "java") {
+		     document.getElementById("current_job_java").innerHTML = `<span class="placeholder-glow"><span class="placeholder placeholder-xs col-3"></span></span>`;
+		 } else {
+		     document.getElementById("current_job_java").innerHTML = '<span class="text-secondary">Pending...</span>';
+		 }
+
+		 if (data["current_job"]["clojure_time"] !== null) {
+		     document.getElementById("current_job_clojure").innerHTML = `<span class="text-green">Completed in ${data["current_job"]["clojure_time"]} s</span>`;
+		 } else if (data["current_job"]["execution"] === "clojure") {
+		     document.getElementById("current_job_clojure").innerHTML = `<span class="placeholder-glow"><span class="placeholder placeholder-xs col-3"></span></span>`;
+		 } else {
+		     document.getElementById("current_job_clojure").innerHTML = '<span class="text-secondary">Pending...</span>';
+		 }
+	     } else {
+		 document.getElementById("current_job_id").innerText = '';
+		 document.getElementById("current_job_c").innerHTML = '';
+		 document.getElementById("current_job_python_threads").innerHTML = '';
+		 document.getElementById("current_job_python_msgq").innerHTML = '';
+		 document.getElementById("current_job_python_pipes").innerHTML = '';
+		 document.getElementById("current_job_java").innerHTML = '';
+		 document.getElementById("current_job_clojure").innerHTML = '';
+	     }
+
+	     
+	 })
+	 .catch(error => console.error('Error fetching job list:', error));
+ }
+ setInterval(updateJobList, 5000);
+ updateJobList();
+</script>
+
+<script>
+ function toggleJobWorker() {
+     document.getElementById('job_worker_button').disabled = true;
+     fetch('/api/job/status')
+	 .then(response => response.text())
+	 .then(status => {
+             const isActive = status === 'True';
+             const button = document.getElementById('job_worker_button');
+	     const endpoint = isActive ? '/api/job/stop' : '/api/job/start';
+
+	     fetch(endpoint);
+	 })
+	 .catch(error => console.error('Error fetching job status:', error));
+ }
+</script>
+
+
+{% endblock %}
+
+
